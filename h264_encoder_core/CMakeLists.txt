@@ -16,6 +16,8 @@ find_package(aws_common REQUIRED)
 add_library(${PROJECT_NAME} SHARED
   src/h264_encoder.cpp
   src/h264_encoder_node_config.cpp
+  src/h264_decoder.cpp
+  src/h264_decoder_node_config.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

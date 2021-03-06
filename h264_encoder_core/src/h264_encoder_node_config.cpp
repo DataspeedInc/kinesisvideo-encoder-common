@@ -30,7 +30,7 @@ constexpr char kQueueSizeKey[] = "queue_size";
 
 constexpr char kDefaultSubscriptionTopic[] = "image_raw";
 constexpr char kDefaultMetadataTopic[] = "metadata";
-constexpr char kDefaultPublicationTopic[] = "encoded";
+constexpr char kDefaultPublicationTopic[] = "image_raw/encoded";
 constexpr int kDefaultQueueSize = 100;
 
 Aws::AwsError GetH264EncoderNodeParams(const Aws::Client::ParameterReaderInterface & param_reader,

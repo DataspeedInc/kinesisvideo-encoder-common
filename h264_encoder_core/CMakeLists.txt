@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 # find_package(FFmpeg REQUIRED)
 find_package(aws_common REQUIRED)
 
+find_package(catkin REQUIRED)
 
 #############
 ## Compile ##
@@ -32,6 +33,10 @@ target_link_libraries(${PROJECT_NAME}
   dl
 )
 
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES ${PROJECT_NAME}
+)
 
 #############
 ## Install ##

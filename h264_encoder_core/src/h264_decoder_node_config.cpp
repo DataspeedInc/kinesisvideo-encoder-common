@@ -27,8 +27,8 @@ constexpr char kSubscriptionTopicKey[] = "subscription_topic";
 constexpr char kPublicationTopicKey[] = "publication_topic";
 constexpr char kQueueSizeKey[] = "queue_size";
 
-constexpr char kDefaultSubscriptionTopic[] = "/raspicam_node/image";
-constexpr char kDefaultPublicationTopic[] = "/video/encoded";
+constexpr char kDefaultSubscriptionTopic[] = "encoded";
+constexpr char kDefaultPublicationTopic[] = "image_raw";
 constexpr int kDefaultQueueSize = 100;
 
 Aws::AwsError GetH264DecoderNodeParams(const Aws::Client::ParameterReaderInterface & param_reader,

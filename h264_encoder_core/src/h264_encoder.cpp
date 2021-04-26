@@ -171,6 +171,8 @@ public:
       src_stride_ = 4 * src_width_;  // 4 color channels (red, green, blue, alpha)
     } else if (src_encoding_ == AV_PIX_FMT_BGRA) {
       src_stride_ = 4 * src_width_;  // 4 color channels (blue, green, red, alpha)
+    } else if (src_encoding_ == AV_PIX_FMT_GRAY8) {
+      src_stride_ = 1 * src_width_;  // 4 color channels (blue, green, red, alpha)
     } else {
       AWS_LOG_ERROR(__func__, "Trying to work with unsupported encoding!");
       return AWS_ERR_PARAM;

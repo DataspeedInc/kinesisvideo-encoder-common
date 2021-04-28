@@ -193,8 +193,17 @@ public:
       codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
       if (AWS_ERR_OK != open_codec(codec, opts)) {
         codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
-	      av_dict_set(&opts, "preset", "veryfast", 0);
+	      av_dict_set(&opts, "preset", "ultrafast", 0);
         av_dict_set(&opts, "tune", "zerolatency", 0);
+        // av_dict_set(&opts, "intra-refresh", "true", 0);
+        av_dict_set(&opts, "x264opts", "keyint=15:rc-lookahead=0:b-adapt=0:bframes=0:intra-refresh=true", 0);
+        av_dict_set(&opts, "forced-idr", "true", 0);
+        // av_dict_set(&opts, "intra-refresh", "true", 0);
+        // av_dict_set(&opts, "key-int-max", "15", 0);
+        // av_dict_set(&opts, "insert-vui", "true", 0);
+        // av_dict_set(&opts, "rc-lookahead", "0", 0);
+        // av_dict_set(&opts, "b-adapt", "false", 0);
+        // av_dict_set(&opts, "bframes", "0", 0);
 
         if (AWS_ERR_OK != open_codec(codec, opts)) {
           AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec
@@ -263,6 +272,7 @@ public:
 
   AwsError Encode(const uint8_t * img_data, H264EncoderResult & res)
   {
+    static uint8_t idr_count = 0;
     if (nullptr == img_data) {
       return AWS_ERR_NULL_PARAM;
     }
@@ -280,6 +290,12 @@ public:
     pkt.size = 0;
 
     int got_output = 0;
+    if (idr_count == 40) {
+      idr_count = 0;
+      pic_in_->pict_type = AV_PICTURE_TYPE_I;
+    } else {
+      idr_count++;
+    }
 
     int ret = avcodec_encode_video2(param_, &pkt, pic_in_, &got_output);
     ++pic_in_->pts;
